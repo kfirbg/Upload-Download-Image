@@ -1,0 +1,42 @@
+.Upload_Download_Window {
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid;
+  box-shadow: 0px 0px 10px 1px black;
+  height: 500px;
+}
+
+.FormClass {
+  margin: 5px;
+}
+
+.imageClass {
+  border-style: dashed;
+  border-width: 3px;
+  border-color: rgba(25, 131, 206, 0.89);
+  // border-color: rgb(63, 80, 102);
+  border-radius: 5px;
+  height: 400px;
+  width: 400px;
+}
+
+img {
+  max-height: 399px;
+  max-width: 399px;
+  border-radius: 3px;
+}
+
+button {
+  margin: 5px;
+  border-radius: 2px;
+  border: 1px solid #555555;
+}
+
+button:hover {
+  color: white;
+  background-color: rgba(25, 131, 206, 0.89);
+  cursor: pointer;
+}

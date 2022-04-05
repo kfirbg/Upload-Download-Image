@@ -1,0 +1,14 @@
+
+<div class="Upload_Download_Window">
+  <form class="FormClass">
+    <div>
+      <input type="file" name="image" multiple (change)="selectImage($event)" />
+      <button (click)="onUpload()">Upload</button>
+    </div>
+    <br />
+    <div class="imageClass">
+        <img *ngIf="url" [src]="url" />
+    </div>
+    <button *ngIf="filename" (click)="Downloadfile()">Download</button>
+  </form>
+</div>
