@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+ 
 
 @Injectable({
   providedIn: 'root'
@@ -7,9 +8,12 @@ import { Injectable } from '@angular/core';
 export class DownloadService {
 
   constructor(private http:HttpClient) { }
-  public server = 'http://localhost:3000';
+  public DownloadServer = 'http://localhost:3000/download';
 
-  getFile(){
-    return this.http.get(this.server+'/download',{responseType:'blob'});    
+  getFile(event:any){
+   const header={
+     content:event,
+   }
+    return this.http.get(this.DownloadServer,{headers:header ,  responseType:'blob'});    
   }
 }
