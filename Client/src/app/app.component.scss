@@ -54,7 +54,10 @@ margin: 2px;
 .uploadAllBtn{
   text-align: left;
   margin: 0 0 0 2.35%;
-
+}
+.downloadAllBtn{
+  text-align: left;
+  margin: 0 0 3% 2.35%;
 }
 
 button {
@@ -82,19 +85,3 @@ button:hover {
     height: 30px;
     cursor: pointer;
 }
-
-// .imageClass {
-//   border-style: dashed;
-//   border-width: 3px;
-//   border-color: rgba(25, 131, 206, 0.89);
-//   border-radius: 5px;
-//   height: 400px;
-//   width: 400px;
-// }
-
-// img {
-//   max-height: 399px;
-//   max-width: 399px;
-//   border-radius: 3px;
-// }
-

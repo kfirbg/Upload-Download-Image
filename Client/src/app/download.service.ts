@@ -12,7 +12,7 @@ export class DownloadService {
 
   getFile(event:any){
    const header={
-     content:event,
+     content:event,//name file
    }
     return this.http.get(this.DownloadServer,{headers:header ,  responseType:'blob'});    
   }

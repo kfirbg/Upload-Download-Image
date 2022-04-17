@@ -11,12 +11,10 @@ import { DownloadService } from './download.service';
 
 export class AppComponent implements OnInit {
   public server = 'http://localhost:3000';
-  imageSrc = 'src/app/Img_Icon/upload.png'  
-
-  image: any;
-  imagesUpload:any=[];
-  imagesDownload:any=[];
-  imagesTemp:any=[];
+  
+  uploadMap =new Map;
+  downloadMap =new Map;
+  uploadImages:any=[];
 
   constructor(private http: HttpClient, private serv: DownloadService) { }
 
@@ -24,80 +22,61 @@ export class AppComponent implements OnInit {
 
   selectImage(event: any) {
     if (event.target.files.length > 0) {
-      this.imagesUpload = event.target.files;
+      this.uploadImages = event.target.files;
+      for(let img of this.uploadImages){
+        this.uploadMap.set(img.name,img)
+      }
     }
-    // var reader = new FileReader();
-    // reader.readAsDataURL(this.image);
-    // reader.onload = (_event) => {
-    // this.url = reader.result;
-    // };
   }
 
   onUpload(event: any) {
     const formData = new FormData();
-    this.image=event;
-    this.imagesDownload.push(this.image);
-    formData.append('file', this.image);
+    this.downloadMap.set(event.key,event.value)
+    formData.append('file', this.uploadMap.get(event.key));
     this.http.post<any>(this.server + '/file', formData).subscribe((res) => {
     },
       (err) => console.log(err)
     );
-    
-    this.onUploadCancel(this.image)
+    this.onUploadCancel(event.key)
   }
 
   onUploadAll(){
     const formData = new FormData();
-    for(let img of this.imagesUpload){
-      formData.append('files', img);
-      this.imagesDownload.push(img);
+    for(let key of this.uploadMap.keys()){
+      formData.append('files', this.uploadMap.get(key)); 
+      this.downloadMap.set(key,this.uploadMap.get(key));
+      this.onUploadCancel(key);
     }
     this.http.post<any>(this.server + '/multipleFiles', formData).subscribe((res) => {
       },
         (err) => console.log(err)
       );
-    this.imagesUpload=[];
   }
 
   onUploadCancel(event: any){
-    let j=0;
-    for(let i=0;i<this.imagesUpload.length;i++){
-      if(this.imagesUpload[i].name!=event.name){
-        this.imagesTemp.push(this.imagesUpload[i]);
-      }
-    }
-    this.imagesUpload=this.imagesTemp;
-    this.imagesTemp=[];
+    this.uploadMap.delete(event);
   }
 
-  onDownloadCancel(event: any){
-    let j=0;
-    console.log(event.name)
-    for(let i=0;i<this.imagesDownload.length;i++){
-      if(this.imagesDownload[i].name!=event.name){
-        this.imagesTemp.push(this.imagesDownload[i]);
-      }
-    }
-    this.imagesDownload=this.imagesTemp;
-    this.imagesTemp=[];
+  onDownloadCancel(event:any){    
+    this.downloadMap.delete(event);
   }
 
   Downloadfile(event:any) {
-    this.serv.getFile(event.name).subscribe(data => {
+    this.serv.getFile(event.key).subscribe(data => {
       let downloadURL = window.URL.createObjectURL(data);
       saveAs(downloadURL);
-      this.onDownloadCancel(event)
+      this.onDownloadCancel(event.key)
     })
   }
   
   onDownloadAll(){
-    for(let i=0;i<this.imagesDownload.length;i++){
-      this.serv.getFile(this.imagesDownload[i].name).subscribe(data => {
+    for(let key of this.downloadMap.keys()){
+      this.serv.getFile(key).subscribe(data => {
         let downloadURL = window.URL.createObjectURL(data);
         saveAs(downloadURL);
-      })
+      })  
+      this.onDownloadCancel(key);
     }
-    this.imagesDownload=[]
   }
 
 }
