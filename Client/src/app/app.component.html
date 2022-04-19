@@ -12,8 +12,8 @@
     <div class="uploadContainer">
       <ul *ngFor="let image of uploadMap|keyvalue;">
           {{image.key}} 
-          <button class="UploadBtn" (click)="onUpload(image)">Upload</button>
-          <button class="CancelBtn" (click)="onUploadCancel(image.key)">Cancel</button>
+          <button (click)="onUpload(image)">Upload</button>
+          <button (click)="onUploadCancel(image.key)">Cancel</button>
       </ul>
       <div class="uploadAllBtn">
         <button *ngIf="uploadMap.size>1" class="inputBtn" (click)="onUploadAll()">Upload All</button>
@@ -28,7 +28,7 @@
     <h1 class="DownloadSection">Download Section</h1>
     <ul *ngFor="let image of downloadMap |keyvalue;">
       {{image.key}} 
-      <button class="UploadBtn" (click)="Downloadfile(image)">Download</button>
+      <button  (click)="Downloadfile(image)">Download</button>
   </ul>
   <div class="downloadAllBtn">
     <button *ngIf="downloadMap.size>1" class="inputBtn" (click)="onDownloadAll()">Download All</button>
